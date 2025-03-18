@@ -1,16 +1,12 @@
 {
   "name": "luxon-hijri",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Hijri date converter based on the Umm al-Qura calendar system, using Luxon for date manipulations.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ussunnah/luxon-hijri.git"
   },
   "keywords": [
     "hijri",
@@ -19,8 +15,6 @@
     "luxon",
     "umm-al-qura"
   ],
-  "author": "USF",
-  "license": "ISC",
   "devDependencies": {
     "@types/luxon": "^3.3.4",
     "jest": "^27.0.0",
@@ -30,8 +24,14 @@
     "@umalqura/core": "^0.0.7",
     "luxon": "^2.5.2"
   },
-  "bugs": {
-    "url": "https://github.com/ussunnah/luxon-hijri/issues"
+  "author": "Ali Camarata",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acamarata/luxon-hijri.git"
   },
-  "homepage": "https://github.com/ussunnah/luxon-hijri#readme"
+  "homepage": "https://github.com/acamarata/luxon-hijri#readme",
+  "bugs": {
+    "url": "https://github.com/acamarata/luxon-hijri/issues"
+  }
 }
