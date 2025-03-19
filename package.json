@@ -1,13 +1,17 @@
 {
   "name": "luxon-hijri",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Hijri date converter based on the Umm al-Qura calendar system, using Luxon for date manipulations.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "prepare": "npm run build",
     "test": "jest"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "hijri",
     "calendar",
