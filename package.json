@@ -1,38 +1,72 @@
 {
   "name": "luxon-hijri",
-  "version": "1.0.4",
-  "description": "A Hijri date converter based on the Umm al-Qura calendar system, using Luxon for date manipulations.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build",
-    "test": "jest"
+  "version": "2.0.0",
+  "description": "Hijri/Gregorian date conversion and formatting using the Umm al-Qura calendar. Built on Luxon. Supports toHijri, toGregorian, formatHijriDate, and isValidHijriDate.",
+  "author": "Aric Camarata",
+  "license": "MIT",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
+    }
   },
+  "sideEffects": false,
   "files": [
-    "dist"
+    "dist/index.cjs",
+    "dist/index.mjs",
+    "dist/index.d.ts",
+    "dist/index.d.mts",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
   ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "pretest": "tsup",
+    "test": "node test.mjs && node test-cjs.cjs",
+    "prepublishOnly": "tsup"
+  },
   "keywords": [
     "hijri",
+    "gregorian",
     "calendar",
     "converter",
     "luxon",
-    "umm-al-qura"
+    "umm-al-qura",
+    "islamic",
+    "date",
+    "format",
+    "typescript"
   ],
-  "devDependencies": {
-    "@types/luxon": "^3.3.4",
-    "jest": "^27.0.0",
-    "typescript": "^4.0.0"
-  },
   "dependencies": {
-    "@umalqura/core": "^0.0.7",
-    "luxon": "^2.5.2"
+    "luxon": "^3.5.0"
   },
-  "author": "Ali Camarata",
-  "license": "MIT",
+  "devDependencies": {
+    "@types/luxon": "^3.4.2",
+    "@types/node": "^22.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/acamarata/luxon-hijri.git"
+    "url": "git+https://github.com/acamarata/luxon-hijri.git"
   },
   "homepage": "https://github.com/acamarata/luxon-hijri#readme",
   "bugs": {

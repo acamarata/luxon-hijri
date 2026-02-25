@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [20, 22, 24]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm run build
+      - run: node test.mjs
+      - run: node test-cjs.cjs
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm run typecheck
+
+  pack-check:
+    name: Pack check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm run build
+      - name: Verify pack contents
+        run: |
+          npm pack --dry-run 2>&1 | tee pack-output.txt
+          grep "dist/index.cjs" pack-output.txt
+          grep "dist/index.mjs" pack-output.txt
+          grep "dist/index.d.ts" pack-output.txt
+          grep "dist/index.d.mts" pack-output.txt
+          grep "README.md" pack-output.txt
+          grep "CHANGELOG.md" pack-output.txt
+          grep "LICENSE" pack-output.txt

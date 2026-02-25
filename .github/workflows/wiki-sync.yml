@@ -1,0 +1,37 @@
+name: Wiki Sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.wiki/**'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: Sync .wiki/ to GitHub Wiki
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Push wiki pages
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki-repo
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Copy wiki files
+        run: |
+          cp .wiki/*.md wiki-repo/
+
+      - name: Commit and push
+        working-directory: wiki-repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "Sync wiki from .wiki/ [skip ci]"
+          git push

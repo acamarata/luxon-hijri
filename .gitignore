@@ -1,32 +1,56 @@
-# Dependency directories
+# ─── Dependencies ───
 node_modules/
+.pnp
+.pnp.js
 
-# Next.js build output
-.next/
-out/
-
-# Build output of TypeScript
+# ─── Build ───
 dist/
+build/
+out/
+*.tsbuildinfo
+*.tgz
 
-# Environment files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# ─── Environment ───
+.env
+.env.*
+!.env.example
 
-# IDE specific files
+# ─── OS ───
+.DS_Store
+Thumbs.db
+._*
+Desktop.ini
+$RECYCLE.BIN/
+
+# ─── IDE / Editor ───
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
+*.sublime-project
+*.sublime-workspace
 
-# System Files
-.DS_Store
-Thumbs.db
-
-# Logs
-logs
+# ─── Logs ───
 *.log
 npm-debug.log*
+pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
+
+# ─── Testing / Coverage ───
+coverage/
+.nyc_output/
+
+# ─── AI Agents ───
+.claude/
+.cursor/
+.copilot/
+.github/copilot/
+.aider*
+.codeium/
+.tabnine/
+.windsurf/
+.cody/
+.sourcegraph/

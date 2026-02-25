@@ -1,28 +1,50 @@
 // toGregorian.ts
 import { DateTime } from 'luxon';
-import { hDatesTable, hDates } from './hDates';
+import { hDatesTable } from './hDates';
+import { fcnaToGregorian } from './fcna';
 import { isValidHijriDate } from './utils';
+import type { ConversionOptions } from './types';
 
-export function toGregorian(hy: number, hm: number, hd: number): Date | null {
-    // Validate the input Hijri date
-    if (!isValidHijriDate(hy, hm, hd)) {
-        throw new Error('Invalid Hijri date');
+export function toGregorian(hy: number, hm: number, hd: number, options?: ConversionOptions): Date | null {
+  if (options?.calendar === 'fcna') {
+    const result = fcnaToGregorian(hy, hm, hd);
+    if (result === null) throw new Error('Invalid Hijri date');
+    return result;
+  }
+
+  if (!isValidHijriDate(hy, hm, hd)) {
+    throw new Error('Invalid Hijri date');
+  }
+
+  // Binary search on hy (table is sorted ascending by Hijri year).
+  let lo = 0;
+  let hi = hDatesTable.length - 1;
+  let found = -1;
+
+  while (lo <= hi) {
+    const mid = (lo + hi) >>> 1;
+    const midHy = hDatesTable[mid].hy;
+
+    if (midHy === hy) {
+      found = mid;
+      break;
+    } else if (midHy < hy) {
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
     }
+  }
 
-    const hijriYearRecord = hDatesTable.find(record => record.hy === hy);
+  if (found === -1) return null;
 
-    if (hijriYearRecord) {
-        let totalDaysTillMonthStart = 0;
-        for (let i = 0; i < hm - 1; i++) {
-            totalDaysTillMonthStart += (hijriYearRecord.dpm >> i) & 1 ? 30 : 29;
-        }
+  const record = hDatesTable[found];
+  let totalDays = 0;
 
-        const totalDays = totalDaysTillMonthStart + hd - 1;
-        const startDate = DateTime.local(hijriYearRecord.gy, hijriYearRecord.gm, hijriYearRecord.gd);
-        const gregorianDate = startDate.plus({ days: totalDays });
+  for (let i = 0; i < hm - 1; i++) {
+    totalDays += (record.dpm >> i) & 1 ? 30 : 29;
+  }
+  totalDays += hd - 1;
 
-        return gregorianDate.toJSDate();
-    }
-
-    return null;
+  const startDate = DateTime.utc(record.gy, record.gm, record.gd);
+  return startDate.plus({ days: totalDays }).toJSDate();
 }

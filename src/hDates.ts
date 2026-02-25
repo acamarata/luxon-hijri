@@ -1,14 +1,10 @@
 // hDates.ts
 // Hijri Dates Reference Table
-export interface hDates {
-    hy:  number; // Hijri Year
-    dpm: number; // Days Per Month
-    gy:  number; // Gregorian Year
-    gm:  number; // Gregorian Month
-    gd:  number; // Gregorian Day
-}
+import { HijriYearRecord } from './types';
 
-export const hDatesTable: hDates[] = [
+export type { HijriYearRecord };
+
+export const hDatesTable: HijriYearRecord[] = [
     { hy: 1318, dpm: 0x02EA, gy: 1900, gm:  4, gd: 30 },
     { hy: 1319, dpm: 0x06E9, gy: 1901, gm:  4, gd: 19 },
     { hy: 1320, dpm: 0x0ED2, gy: 1902, gm:  4, gd: 9  },

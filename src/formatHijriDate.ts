@@ -2,60 +2,61 @@
 import { DateTime } from 'luxon';
 import { hmLong, hmMedium, hmShort } from './hMonths';
 import { hwLong, hwShort, hwNumeric } from './hWeekdays';
+import { toGregorian } from './toGregorian';
+import type { HijriDate } from './types';
 
-/**
- * Formats a Hijri date according to the given format string
- * @param {Date} hijriDate - The Hijri date to format
- * @param {string} format - The format string
- * @returns {string} - The formatted date string
- */
-export function formatHijriDate(hijriDate: { hy: number; hm: number; hd: number }, format: string): string {
-    // Replace each pattern in the format string with the corresponding value
-    return format.replace(/\biYYYY\b|\biYY\b|\biMM\b|\biM\b|\biMMM\b|\biMMMM\b|\biDD\b|\biD\b|\biE\b|\biEEE\b|\biEEEE\b|\b[HHhmsaiozZ]+\b/g, (match) => {
-        switch (match) {
-            case 'iYYYY':
-                return String(hijriDate.hy).padStart(4, '0');
-            case 'iYY':
-                return String(hijriDate.hy % 100).padStart(2, '0');
-            case 'iMM':
-                return String(hijriDate.hm).padStart(2, '0');
-            case 'iM':
-                return String(hijriDate.hm);
-            case 'iMMM':
-                return hmMedium[hijriDate.hm - 1];
-            case 'iMMMM':
-                return hmLong[hijriDate.hm - 1];
-            case 'iDD':
-                return String(hijriDate.hd).padStart(2, '0');
-            case 'iD':
-                return String(hijriDate.hd);
-            case 'iE':
-                return String(hwNumeric[DateTime.fromObject({ year: hijriDate.hy, month: hijriDate.hm, day: hijriDate.hd }).weekday - 1]);
-            case 'iEEE':
-                return hwShort[DateTime.fromObject({ year: hijriDate.hy, month: hijriDate.hm, day: hijriDate.hd }).weekday - 1];
-            case 'iEEEE':
-                return hwLong[DateTime.fromObject({ year: hijriDate.hy, month: hijriDate.hm, day: hijriDate.hd }).weekday - 1];                
-    
-            // The following patterns are the same for both Gregorian and Hijri
-            case 'HH':
-            case 'H':
-            case 'hh':
-            case 'h':
-            case 'mm':
-            case 'm':
-            case 'ss':
-            case 's':
-            case 'a':
-            case 'iooo':
-            case 'ioooo':
-            case 'z':
-            case 'zz':
-            case 'Z':
-                // Use Luxon's DateTime formatting for these patterns
-                const gregorianDate = DateTime.fromObject({ year: hijriDate.hy, month: hijriDate.hm, day: hijriDate.hd });
-                return gregorianDate.toFormat(match);
-            default:
-                return match;
-        }
-    });
+// Token regex: longest tokens first to prevent partial matches.
+const TOKEN_RE =
+  /iYYYY|iYY|iMMMM|iMMM|iMM|iM|iDD|iD|iEEEE|iEEE|iE|ioooo|iooo|HH|H|hh|h|mm|m|ss|s|a|z{1,3}|ZZ|Z/g;
+
+export function formatHijriDate(hijriDate: HijriDate, format: string): string {
+  // Lazy Gregorian DateTime — computed at most once per format call,
+  // only when a token that needs it is encountered.
+  let _gregDt: DateTime | undefined;
+
+  function getGregDt(): DateTime {
+    if (!_gregDt) {
+      const greg = toGregorian(hijriDate.hy, hijriDate.hm, hijriDate.hd);
+      // toGregorian throws for invalid input, so greg is non-null here.
+      _gregDt = DateTime.fromJSDate(greg as Date, { zone: 'UTC' });
+    }
+    return _gregDt;
+  }
+
+  return format.replace(TOKEN_RE, (match) => {
+    switch (match) {
+      case 'iYYYY':
+        return String(hijriDate.hy).padStart(4, '0');
+      case 'iYY':
+        return String(hijriDate.hy % 100).padStart(2, '0');
+      case 'iMM':
+        return String(hijriDate.hm).padStart(2, '0');
+      case 'iM':
+        return String(hijriDate.hm);
+      case 'iMMM':
+        return hmMedium[hijriDate.hm - 1];
+      case 'iMMMM':
+        return hmLong[hijriDate.hm - 1];
+      case 'iDD':
+        return String(hijriDate.hd).padStart(2, '0');
+      case 'iD':
+        return String(hijriDate.hd);
+      case 'iE':
+      case 'iEEE':
+      case 'iEEEE': {
+        // Luxon weekday: 1=Mon … 7=Sun. Modulo 7: Mon=1 … Sat=6, Sun=0.
+        // hwLong/hwShort/hwNumeric arrays: index 0=Sunday, 1=Monday, … 6=Saturday.
+        const idx = getGregDt().weekday % 7;
+        if (match === 'iE') return String(hwNumeric[idx]);
+        if (match === 'iEEE') return hwShort[idx];
+        return hwLong[idx];
+      }
+      case 'iooo':
+      case 'ioooo':
+        return 'AH';
+      default:
+        // Delegate time and timezone tokens to Luxon using the Gregorian DateTime.
+        return getGregDt().toFormat(match);
+    }
+  });
 }
