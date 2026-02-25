@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      hijri-core:
+        specifier: file:../hijri-core
+        version: file:../hijri-core
       luxon:
         specifier: ^3.5.0
         version: 3.7.2
@@ -407,6 +410,10 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
+  hijri-core@file:../hijri-core:
+    resolution: {directory: ../hijri-core, type: directory}
+    engines: {node: '>=20'}
+
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
     engines: {node: '>=10'}
@@ -793,6 +800,8 @@ snapshots:
 
   fsevents@2.3.3:
     optional: true
+
+  hijri-core@file:../hijri-core: {}
 
   joycon@3.1.1: {}
 

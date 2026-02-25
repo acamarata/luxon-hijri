@@ -10,7 +10,7 @@ export default defineConfig({
   sourcemap: true,
   target: 'es2020',
   platform: 'node',
-  external: ['luxon'],
+  external: ['luxon', 'hijri-core'],
   outExtension({ format }) {
     return { js: format === 'cjs' ? '.cjs' : '.mjs' };
   },

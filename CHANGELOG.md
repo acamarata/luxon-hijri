@@ -1,8 +1,18 @@
 # Changelog
 
+<!-- markdownlint-disable MD024 -->
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
+## [2.1.0] - 2026-02-25
+
+### Changed
+
+- Engine logic extracted to `hijri-core` (new dependency). All Hijri conversion algorithms now live in that package and are re-exported from `luxon-hijri` with identical signatures. Zero breaking changes to the public API.
+- `src/hDates.ts`, `src/hMonths.ts`, `src/hWeekdays.ts`, `src/fcna.ts`, `src/utils.ts`, `src/toHijri.ts`, `src/toGregorian.ts` — all now delegate to `hijri-core`. The UAQ table, FCNA engine, month/weekday names, and conversion functions have a single source of truth across the hijri ecosystem.
+- `hijri-core ^1.0.0` added as a runtime dependency. `luxon` stays as a runtime dependency (still needed by `formatHijriDate` for time and timezone tokens).
 
 ## [2.0.0] - 2026-02-25
 
