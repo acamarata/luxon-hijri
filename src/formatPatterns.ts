@@ -40,8 +40,10 @@ export const formatPatterns = {
 
     // Timezone
     z: 'Timezone (abbreviated)',
-    zz: 'Timezone (full)',
-    Z: 'Timezone offset from UTC',
+    zz: 'Timezone (medium)',
+    zzz: 'Timezone (full)',
+    Z: 'Timezone offset from UTC (+HH:MM)',
+    ZZ: 'Timezone offset from UTC (condensed)',
 };
 
 // Export the patterns for use in the rest of the package

@@ -1,4 +1,4 @@
-// types.ts — re-exports from hijri-core for backward compatibility
+// types.ts: re-exports from hijri-core for backward compatibility
 export type { HijriDate, HijriYearRecord, ConversionOptions } from 'hijri-core';
 
 // CalendarSystem documents the built-in calendar identifiers.

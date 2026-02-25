@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: pnpm
-      - run: pnpm install
+      - run: pnpm install --frozen-lockfile
       - run: pnpm run build
       - run: node test.mjs
       - run: node test-cjs.cjs
@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
-      - run: pnpm install
+      - run: pnpm install --frozen-lockfile
       - run: pnpm run typecheck
 
   pack-check:
@@ -48,7 +48,7 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
-      - run: pnpm install
+      - run: pnpm install --frozen-lockfile
       - run: pnpm run build
       - name: Verify pack contents
         run: |

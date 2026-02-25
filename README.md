@@ -53,7 +53,7 @@ Throws `Error("Invalid Gregorian date")` if `date` is not a valid `Date`.
 ```javascript
 toHijri(new Date(2024, 6, 7, 12))                           // { hy: 1446, hm: 1, hd: 1 }  (UAQ)
 toHijri(new Date(2025, 2, 1, 12), { calendar: 'fcna' })    // { hy: 1446, hm: 9, hd: 1 }  (FCNA)
-toHijri(new Date(1800, 0, 1))                               // null — before UAQ table range
+toHijri(new Date(1800, 0, 1))                               // null - before UAQ table range
 ```
 
 ### `toGregorian(hy, hm, hd, options?)`
@@ -61,7 +61,7 @@ toHijri(new Date(1800, 0, 1))                               // null — before U
 Converts a Hijri date to a Gregorian `Date` at UTC midnight.
 
 ```typescript
-function toGregorian(hy: number, hm: number, hd: number, options?: ConversionOptions): Date | null
+function toGregorian(hy: number, hm: number, hd: number, options?: ConversionOptions): Date
 ```
 
 Throws `Error("Invalid Hijri date")` if the date is invalid for the selected calendar.
@@ -142,14 +142,14 @@ interface HijriYearRecord {
 
 ```javascript
 import {
-  hDatesTable,    // HijriYearRecord[] — the full Umm al-Qura table (184 entries)
-  hmLong,         // string[12] — full month names
-  hmMedium,       // string[12] — medium month names
-  hmShort,        // string[12] — abbreviated month names
-  hwLong,         // string[7] — full weekday names (Sunday first)
-  hwShort,        // string[7] — abbreviated weekday names
-  hwNumeric,      // number[7] — weekday numbers (1–7, Sunday=1)
-  formatPatterns, // Record<string, string> — token reference
+  hDatesTable,    // HijriYearRecord[] - the full Umm al-Qura table (184 entries)
+  hmLong,         // string[12] - full month names
+  hmMedium,       // string[12] - medium month names
+  hmShort,        // string[12] - abbreviated month names
+  hwLong,         // string[7] - full weekday names (Sunday first)
+  hwShort,        // string[7] - abbreviated weekday names
+  hwNumeric,      // number[7] - weekday numbers (1-7, Sunday=1)
+  formatPatterns, // Record<string, string> - token reference
 } from 'luxon-hijri';
 ```
 
@@ -161,7 +161,7 @@ import {
 
 ## Architecture
 
-The UAQ engine is a pure table lookup with binary search (O(log 183)). The FCNA engine computes new moon times astronomically using the Meeus Ch.49 formula — 3 to 5 trigonometric evaluations per call, sub-millisecond on any modern JS engine.
+The UAQ engine is a pure table lookup with binary search (O(log 183)). The FCNA engine computes new moon times astronomically using the Meeus Ch.49 formula: 3 to 5 trigonometric evaluations per call, sub-millisecond on any modern JS engine.
 
 For more detail see the [Architecture wiki page](https://github.com/acamarata/luxon-hijri/wiki/Architecture).
 
@@ -178,7 +178,7 @@ import { toHijri, toGregorian, formatHijriDate, isValidHijriDate } from 'luxon-h
 import type { HijriDate, HijriYearRecord, CalendarSystem, ConversionOptions } from 'luxon-hijri';
 
 const h: HijriDate | null = toHijri(new Date());
-const g: Date | null = toGregorian(1444, 9, 1, { calendar: 'fcna' });
+const g: Date = toGregorian(1444, 9, 1, { calendar: 'fcna' });
 ```
 
 ## Documentation
@@ -188,9 +188,9 @@ Full API reference, architecture notes, calendar background, and format token gu
 
 ## Related
 
-- [nrel-spa](https://www.npmjs.com/package/nrel-spa) — NREL Solar Position Algorithm (pure JS)
-- [pray-calc](https://www.npmjs.com/package/pray-calc) — Islamic prayer times, depends on nrel-spa
-- [solar-spa](https://www.npmjs.com/package/solar-spa) — NREL SPA compiled to WebAssembly
+- [nrel-spa](https://www.npmjs.com/package/nrel-spa): NREL Solar Position Algorithm (pure JS)
+- [pray-calc](https://www.npmjs.com/package/pray-calc): Islamic prayer times, depends on nrel-spa
+- [solar-spa](https://www.npmjs.com/package/solar-spa): NREL SPA compiled to WebAssembly
 
 ## License
 

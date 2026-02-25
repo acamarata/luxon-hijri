@@ -2,13 +2,13 @@
 
 ## Overview
 
-luxon-hijri is a pure table lookup implementation. It does not perform any astronomical calculation at runtime. Instead it ships the official Umm al-Qura calendar table — 183 Hijri years of precomputed data — and does binary search to navigate it.
+luxon-hijri v2.1 delegates all calendar engine logic to [hijri-core](https://github.com/acamarata/hijri-core), a zero-dependency package that houses the Umm al-Qura table, FCNA algorithm, and calendar registry. This package re-exports the conversion functions and data with identical signatures, then adds Luxon-based date formatting on top.
 
-Luxon is used only for two things: computing the equivalent Gregorian DateTime when format tokens like `iEEEE` (weekday) or time tokens need it, and for date arithmetic in `toGregorian` when adding days to the Muharram start date.
+Luxon is used for one thing only: computing the equivalent Gregorian DateTime inside `formatHijriDate` when tokens like `iEEEE` (weekday) or time/timezone tokens are used. All conversion arithmetic (`toHijri`, `toGregorian`, `isValidHijriDate`) runs through hijri-core without Luxon.
 
 ## The Umm al-Qura Table
 
-The table in [src/hDates.ts](../src/hDates.ts) has 184 rows. The first 183 are real Hijri years (1318–1500). The 184th is a sentinel entry (year 1501, `dpm: 0`) that records the Gregorian start date of 1 Muharram 1501 — used as an upper boundary when converting Gregorian dates near the end of the table.
+The table lives in `hijri-core` and is re-exported from this package as `hDatesTable`. It has 184 rows. The first 183 are real Hijri years (1318–1500). The 184th is a sentinel entry (year 1501, `dpm: 0`) that records the Gregorian start date of 1 Muharram 1501, used as an upper boundary when converting Gregorian dates near the end of the table.
 
 Each row stores:
 
@@ -20,7 +20,7 @@ Each row stores:
 | `gm` | number | Gregorian month of 1 Muharram (1-based) |
 | `gd` | number | Gregorian day of 1 Muharram |
 
-Example entry: `{ hy: 1444, dpm: 0x0555, gy: 2022, gm: 7, gd: 30 }` — year 1444 started on July 30, 2022 (Gregorian). The `dpm` bitmask tells us which months have 30 days vs 29.
+Example entry: `{ hy: 1444, dpm: 0x0555, gy: 2022, gm: 7, gd: 30 }`. Year 1444 started on July 30, 2022 (Gregorian). The `dpm` bitmask tells us which months have 30 days vs 29.
 
 Reading `dpm`: for month `m` (1-based), the day count is `((dpm >> (m - 1)) & 1) ? 30 : 29`.
 
@@ -48,7 +48,7 @@ Returns `null` for input before the first entry or if the sentinel is hit (input
 
 3. Sum the day counts for months 1 through `hm - 1` using the `dpm` bitmask. Add `hd - 1` for the day within the current month. This gives `totalDays` elapsed since 1 Muharram of that year.
 
-4. Use `DateTime.utc(gy, gm, gd).plus({ days: totalDays }).toJSDate()` to produce the Gregorian date as a UTC Date.
+4. Sum days elapsed from 1 Muharram, then offset from the entry's UTC start date to produce a UTC midnight `Date`.
 
 ### Validation (`isValidHijriDate`)
 
@@ -68,7 +68,7 @@ let _gregDt: DateTime | undefined;
 function getGregDt(): DateTime {
   if (!_gregDt) {
     const greg = toGregorian(hijriDate.hy, hijriDate.hm, hijriDate.hd);
-    _gregDt = DateTime.fromJSDate(greg as Date, { zone: 'UTC' });
+    _gregDt = DateTime.fromJSDate(greg, { zone: 'UTC' });
   }
   return _gregDt;
 }
@@ -78,7 +78,7 @@ This avoids the Gregorian lookup entirely when only pure Hijri tokens are used.
 
 **Weekday index mapping**: Luxon's `weekday` runs 1 (Monday) through 7 (Sunday). The weekday arrays (`hwLong`, `hwShort`, `hwNumeric`) are indexed 0–6 with Sunday at index 0. The mapping is:
 
-```
+```text
 arrayIndex = luxonWeekday % 7
 // Monday=1 → 1, Tuesday=2 → 2, ..., Saturday=6 → 6, Sunday=7 → 0
 ```
@@ -87,11 +87,11 @@ arrayIndex = luxonWeekday % 7
 
 All three functions (`toHijri`, `toGregorian`, `isValidHijriDate`) use binary search on a 184-entry table. This gives O(log 184) ≈ 8 comparisons worst case, compared to the O(184) linear scan used in v1.
 
-For typical usage — converting a handful of dates per request — the difference is negligible. For batch workloads converting thousands of dates, the reduction is meaningful.
+For typical usage, converting a handful of dates per request, the difference is negligible. For batch workloads converting thousands of dates, the reduction is meaningful.
 
-## FCNA Calendar Engine (`src/fcna.ts`)
+## FCNA Calendar Engine
 
-The FCNA/ISNA calendar is computed astronomically rather than looked up from a table. It works for all Hijri years, not just the 1318–1500 range covered by the UAQ table.
+The FCNA/ISNA calendar is computed astronomically rather than looked up from a table. It works for all Hijri years, not just the 1318–1500 range covered by the UAQ table. The implementation lives in [hijri-core](https://github.com/acamarata/hijri-core) and is accessed through the calendar registry.
 
 ### FCNA Criterion
 
@@ -105,15 +105,15 @@ New moon times come from Jean Meeus, *Astronomical Algorithms* (2nd ed.), Chapte
 
 For years within the UAQ table (1318–1500 H), the UAQ month start date is used as the anchor for the nearest-new-moon search. This ensures the FCNA computation is consistent with the validated UAQ dataset for the date range where both systems overlap.
 
-For years outside the table, the anchor comes from the Islamic epoch (1 Muharram 1 AH ≈ JDE 1948438.5) plus the mean number of synodic months elapsed. Meeus corrections then adjust the mean estimate to the actual conjunction time.
+For years outside the table, the anchor comes from the Islamic epoch (1 Muharram 1 AH approximately JDE 1948438.5) plus the mean number of synodic months elapsed. Meeus corrections then adjust the mean estimate to the actual conjunction time.
 
 ### Nearest New Moon Search
 
-Given an anchor UTC timestamp, the engine estimates k, then checks k−2 through k+2 (five candidates) for the corrected new moon closest to the anchor. This handles any estimation error from the anchor strategy.
+Given an anchor UTC timestamp, the engine estimates k, then checks k-2 through k+2 (five candidates) for the corrected new moon closest to the anchor. This handles any estimation error from the anchor strategy.
 
 ### Calendar Conversion
 
-`fcnaToGregorian(hy, hm, hd)`: sum the FCNA month-start offsets and add hd−1 days.
+`fcnaToGregorian(hy, hm, hd)`: sum the FCNA month-start offsets and add hd-1 days.
 
 `fcnaToHijri(date)`: shift back ~15 days to ensure kApprox points to the current month's conjunction rather than the next. Try three adjacent k values; for each, compute the FCNA month start and next month start, then check whether the input falls within that window. Map the matching k to (hy, hm) via the K_EPOCH offset, and compute hd from the day offset.
 
@@ -121,17 +121,15 @@ FCNA uses UTC date components (`getUTCFullYear`, `getUTCMonth`, `getUTCDate`) be
 
 ### Performance
 
-FCNA conversion calls `newMoonJDE` (the Meeus formula) 3–5 times per call. Each call is a fixed set of floating-point trig operations — sub-millisecond in any modern JS engine. Month length computation (`fcnaDaysInMonth`) calls it twice more. No caching is done since usage patterns are typically small-batch.
+FCNA conversion calls `newMoonJDE` (the Meeus formula) 3–5 times per call. Each call is a fixed set of floating-point trig operations, sub-millisecond in any modern JS engine. Month length computation calls it twice more. No caching is done since usage patterns are typically small-batch.
 
 ## Why Luxon
 
-Luxon is used for two narrow purposes:
+Luxon is used for one purpose only in this package:
 
-1. `DateTime.utc(gy, gm, gd).plus({ days: n }).toJSDate()` in `toGregorian` — cleaner than manual day arithmetic across month/year boundaries.
+`DateTime.fromJSDate(greg, { zone: 'UTC' })` in `formatHijriDate` provides `.weekday` and `.toFormat()` for time/timezone tokens.
 
-2. `DateTime.fromJSDate(greg, { zone: 'UTC' })` in `formatHijriDate` — provides `.weekday` and `.toFormat()` for time/timezone tokens.
-
-Neither use requires Luxon's timezone database for standard Hijri date formatting. If you only use Hijri date tokens (no time/timezone tokens), the Gregorian DateTime is never constructed.
+All conversion arithmetic (`toHijri`, `toGregorian`, `isValidHijriDate`) runs through hijri-core without Luxon. Neither Luxon's timezone database nor its date arithmetic is needed for standard Hijri date formatting. If you only use Hijri date tokens (no time/timezone tokens), the Gregorian DateTime is never constructed.
 
 ---
 

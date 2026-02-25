@@ -35,7 +35,7 @@ formatHijriDate({ hy: 1444, hm: 9, hd: 1 }, 'iEEEE, iD iMMMM iYYYY ioooo');
 - Two calendars: Umm al-Qura (default, table-based, 1318–1500 H) and FCNA/ISNA (astronomical, all years)
 - FCNA criterion: conjunction before 12:00 UTC → month starts D+1, else D+2 (Meeus Ch.49 algorithm)
 - Zero runtime dependencies beyond Luxon
-- Synchronous — no async, no loading delay
+- Synchronous: no async, no loading delay
 - Dual CJS and ESM, full TypeScript definitions
 - Weekday format bug from v1 is fixed in v2 (weekday tokens now use correct Gregorian conversion)
 

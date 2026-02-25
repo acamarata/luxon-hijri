@@ -42,7 +42,7 @@ toHijri(new Date(1800, 0, 1), { calendar: 'uaq' })  // null (before table range)
 Converts a Hijri date to a Gregorian `Date`.
 
 ```typescript
-function toGregorian(hy: number, hm: number, hd: number, options?: ConversionOptions): Date | null
+function toGregorian(hy: number, hm: number, hd: number, options?: ConversionOptions): Date
 ```
 
 **Parameters**
@@ -54,9 +54,9 @@ function toGregorian(hy: number, hm: number, hd: number, options?: ConversionOpt
 | `hd` | `number` | Hijri day (1–29 or 1–30 depending on the month) |
 | `options` | `ConversionOptions` | Optional. `{ calendar: 'uaq' }` (default) or `{ calendar: 'fcna' }`. |
 
-**Returns** `Date | null`
+**Returns** `Date`
 
-Returns a UTC Date at midnight. Returns `null` if no table entry matches (UAQ only; for valid input that passes `isValidHijriDate` this should not occur).
+Returns a UTC Date at midnight.
 
 **Throws** `Error("Invalid Hijri date")` if the date fails validation.
 
@@ -66,7 +66,7 @@ Returns a UTC Date at midnight. Returns `null` if no table entry matches (UAQ on
 toGregorian(1444, 9, 1)                           // 2023-03-23T00:00:00.000Z
 toGregorian(1446, 9, 1, { calendar: 'fcna' })     // 2025-03-01T00:00:00.000Z
 toGregorian(1446, 10, 1, { calendar: 'fcna' })    // 2025-03-30T00:00:00.000Z
-toGregorian(1444, 0, 1)  // throws — month 0 is invalid
+toGregorian(1444, 0, 1)  // throws: month 0 is invalid
 ```
 
 ---
@@ -165,11 +165,11 @@ For FCNA: `hy` must be ≥ 1, `hm` must be 1–12, and `hd` must not exceed the 
 
 ```javascript
 isValidHijriDate(1444, 9, 1)                          // true
-isValidHijriDate(1444, 9, 30)                         // false — Ramadan 1444 has 29 days (UAQ)
-isValidHijriDate(1317, 1, 1)                          // false — before table range
-isValidHijriDate(1501, 1, 1)                          // false — sentinel boundary
-isValidHijriDate(1, 1, 1, { calendar: 'fcna' })       // true  — FCNA supports all years
-isValidHijriDate(1600, 1, 1, { calendar: 'fcna' })    // true  — beyond UAQ table, FCNA computed
+isValidHijriDate(1444, 9, 30)                         // false - Ramadan 1444 has 29 days (UAQ)
+isValidHijriDate(1317, 1, 1)                          // false - before table range
+isValidHijriDate(1501, 1, 1)                          // false - sentinel boundary
+isValidHijriDate(1, 1, 1, { calendar: 'fcna' })       // true  - FCNA supports all years
+isValidHijriDate(1600, 1, 1, { calendar: 'fcna' })    // true  - beyond UAQ table, FCNA computed
 ```
 
 ---
@@ -184,8 +184,8 @@ interface HijriDate {
 }
 
 // Calendar system selector.
-// 'uaq' — Umm al-Qura (default): table-based, covers 1318–1500 H.
-// 'fcna' — FCNA/ISNA: astronomical calculation, works for all Hijri years ≥ 1 AH.
+// 'uaq': Umm al-Qura (default): table-based, covers 1318–1500 H.
+// 'fcna': FCNA/ISNA: astronomical calculation, works for all Hijri years >= 1 AH.
 type CalendarSystem = 'uaq' | 'fcna';
 
 interface ConversionOptions {
@@ -218,14 +218,14 @@ import type {
 
 ```javascript
 import {
-  hDatesTable,    // HijriYearRecord[] — 184 entries (183 real years + 1 sentinel)
-  hmLong,         // string[12] — full month names
-  hmMedium,       // string[12] — medium month names
-  hmShort,        // string[12] — abbreviated month names
-  hwLong,         // string[7] — full weekday names (Sunday-first order)
-  hwShort,        // string[7] — abbreviated weekday names
-  hwNumeric,      // number[7] — weekday numbers (1–7, Sunday=1)
-  formatPatterns, // Record<string, string> — token reference map
+  hDatesTable,    // HijriYearRecord[] - 184 entries (183 real years + 1 sentinel)
+  hmLong,         // string[12] - full month names
+  hmMedium,       // string[12] - medium month names
+  hmShort,        // string[12] - abbreviated month names
+  hwLong,         // string[7] - full weekday names (Sunday-first order)
+  hwShort,        // string[7] - abbreviated weekday names
+  hwNumeric,      // number[7] - weekday numbers (1-7, Sunday=1)
+  formatPatterns, // Record<string, string> - token reference map
 } from 'luxon-hijri';
 ```
 
@@ -244,7 +244,7 @@ import {
 | 8 | Ramadan | Ramadan | Ram |
 | 9 | Shawwal | Shawwal | Shw |
 | 10 | Dhul Qi'dah | Dhul-Qidah | DhQ |
-| 11 | Dhul Hijjah | Dhul-Hijah | DhH |
+| 11 | Dhul Hijjah | Dhul-Hijjah | DhH |
 
 **Weekday arrays** (index 0 = Sunday, index 6 = Saturday)
 

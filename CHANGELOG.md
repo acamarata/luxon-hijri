@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 
 - Engine logic extracted to `hijri-core` (new dependency). All Hijri conversion algorithms now live in that package and are re-exported from `luxon-hijri` with identical signatures. Zero breaking changes to the public API.
-- `src/hDates.ts`, `src/hMonths.ts`, `src/hWeekdays.ts`, `src/fcna.ts`, `src/utils.ts`, `src/toHijri.ts`, `src/toGregorian.ts` — all now delegate to `hijri-core`. The UAQ table, FCNA engine, month/weekday names, and conversion functions have a single source of truth across the hijri ecosystem.
+- `src/hDates.ts`, `src/hMonths.ts`, `src/hWeekdays.ts`, `src/fcna.ts`, `src/utils.ts`, `src/toHijri.ts`, `src/toGregorian.ts`: all now delegate to `hijri-core`. The UAQ table, FCNA engine, month/weekday names, and conversion functions have a single source of truth across the hijri ecosystem.
 - `hijri-core ^1.0.0` added as a runtime dependency. `luxon` stays as a runtime dependency (still needed by `formatHijriDate` for time and timezone tokens).
 
 ## [2.0.0] - 2026-02-25
@@ -20,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **FCNA/ISNA calendar support**: `toHijri`, `toGregorian`, and `isValidHijriDate` now accept an optional `{ calendar: 'fcna' }` option. The FCNA criterion: if the astronomical conjunction occurs before 12:00 UTC the month begins D+1, otherwise D+2. New moon times use the full Meeus Chapter 49 formula (accurate to within a few minutes for 1000–3000 CE). The FCNA calendar works for all Hijri years, not just the 1318–1500 H range covered by the UAQ table.
 - New exported types: `CalendarSystem` (`'uaq' | 'fcna'`) and `ConversionOptions` (`{ calendar?: CalendarSystem }`).
-- `src/fcna.ts`: standalone FCNA engine — Meeus Ch.49 new moon algorithm, UAQ anchor lookup, FCNA criterion, and full Hijri↔Gregorian conversion without external dependencies beyond the existing hDatesTable.
+- `src/fcna.ts`: standalone FCNA engine. Meeus Ch.49 new moon algorithm, UAQ anchor lookup, FCNA criterion, and full Hijri/Gregorian conversion without external dependencies beyond the existing hDatesTable.
 - Dual CJS and ESM build via tsup (`dist/index.cjs`, `dist/index.mjs`)
 - Full TypeScript declarations for both module formats (`dist/index.d.ts`, `dist/index.d.mts`)
 - `src/types.ts` with named exported `HijriDate` and `HijriYearRecord` interfaces

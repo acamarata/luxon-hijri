@@ -10,15 +10,14 @@ const TOKEN_RE =
   /iYYYY|iYY|iMMMM|iMMM|iMM|iM|iDD|iD|iEEEE|iEEE|iE|ioooo|iooo|HH|H|hh|h|mm|m|ss|s|a|z{1,3}|ZZ|Z/g;
 
 export function formatHijriDate(hijriDate: HijriDate, format: string): string {
-  // Lazy Gregorian DateTime — computed at most once per format call,
+  // Lazy Gregorian DateTime, computed at most once per format call,
   // only when a token that needs it is encountered.
   let _gregDt: DateTime | undefined;
 
   function getGregDt(): DateTime {
     if (!_gregDt) {
       const greg = toGregorian(hijriDate.hy, hijriDate.hm, hijriDate.hd);
-      // toGregorian throws for invalid input, so greg is non-null here.
-      _gregDt = DateTime.fromJSDate(greg as Date, { zone: 'UTC' });
+      _gregDt = DateTime.fromJSDate(greg, { zone: 'UTC' });
     }
     return _gregDt;
   }

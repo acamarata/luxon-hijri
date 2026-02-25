@@ -4,7 +4,7 @@
 
 The Islamic calendar (also called the Hijri calendar) is a lunar calendar consisting of 12 months in a year of 354 or 355 days. Because the lunar year is roughly 11 days shorter than the solar year, the Islamic calendar cycles through all seasons over a period of approximately 33 years.
 
-The calendar begins from the year of the Hijra — the migration of the Prophet Muhammad from Mecca to Medina in 622 CE. That year is 1 AH (Anno Hegirae). The Hijri year is written with the suffix "H" or "AH."
+The calendar begins from the year of the Hijra: the migration of the Prophet Muhammad from Mecca to Medina in 622 CE. That year is 1 AH (Anno Hegirae). The Hijri year is written with the suffix "H" or "AH."
 
 Each month begins with the sighting of the crescent moon (hilal). Because actual lunar visibility depends on atmospheric conditions and geographic location, two methods exist for determining month start:
 
