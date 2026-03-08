@@ -12,13 +12,13 @@ The table lives in `hijri-core` and is re-exported from this package as `hDatesT
 
 Each row stores:
 
-| Field | Type | Description |
-| --- | --- | --- |
-| `hy` | number | Hijri year |
+| Field | Type   | Description                                                                           |
+| ----- | ------ | ------------------------------------------------------------------------------------- |
+| `hy`  | number | Hijri year                                                                            |
 | `dpm` | number | 12-bit bitmask: bit 0 = month 1, bit 11 = month 12. 1 means 30 days, 0 means 29 days. |
-| `gy` | number | Gregorian year of 1 Muharram |
-| `gm` | number | Gregorian month of 1 Muharram (1-based) |
-| `gd` | number | Gregorian day of 1 Muharram |
+| `gy`  | number | Gregorian year of 1 Muharram                                                          |
+| `gm`  | number | Gregorian month of 1 Muharram (1-based)                                               |
+| `gd`  | number | Gregorian day of 1 Muharram                                                           |
 
 Example entry: `{ hy: 1444, dpm: 0x0555, gy: 2022, gm: 7, gd: 30 }`. Year 1444 started on July 30, 2022 (Gregorian). The `dpm` bitmask tells us which months have 30 days vs 29.
 
@@ -99,7 +99,7 @@ The Fiqh Council of North America uses a global visibility rule: if the astronom
 
 ### New Moon Computation
 
-New moon times come from Jean Meeus, *Astronomical Algorithms* (2nd ed.), Chapter 49. The algorithm takes an integer k (count of new moons since a reference epoch near J2000) and returns the Julian Ephemeris Day (JDE) of the corrected new moon. The correction terms include the solar anomaly, lunar anomaly, argument of latitude, ascending node, and 14 additional planetary terms. Accuracy: within a few minutes for 1000–3000 CE.
+New moon times come from Jean Meeus, _Astronomical Algorithms_ (2nd ed.), Chapter 49. The algorithm takes an integer k (count of new moons since a reference epoch near J2000) and returns the Julian Ephemeris Day (JDE) of the corrected new moon. The correction terms include the solar anomaly, lunar anomaly, argument of latitude, ascending node, and 14 additional planetary terms. Accuracy: within a few minutes for 1000–3000 CE.
 
 ### Anchor Strategy
 

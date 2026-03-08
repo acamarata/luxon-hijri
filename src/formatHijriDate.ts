@@ -1,6 +1,6 @@
 // formatHijriDate.ts
 import { DateTime } from 'luxon';
-import { hmLong, hmMedium, hmShort } from './hMonths';
+import { hmLong, hmMedium } from './hMonths';
 import { hwLong, hwShort, hwNumeric } from './hWeekdays';
 import { toGregorian } from './toGregorian';
 import type { HijriDate } from './types';
@@ -9,7 +9,23 @@ import type { HijriDate } from './types';
 const TOKEN_RE =
   /iYYYY|iYY|iMMMM|iMMM|iMM|iM|iDD|iD|iEEEE|iEEE|iE|ioooo|iooo|HH|H|hh|h|mm|m|ss|s|a|z{1,3}|ZZ|Z/g;
 
+/**
+ * Format a Hijri date using a token-based format string.
+ *
+ * Hijri-specific tokens use the `i` prefix (iYYYY, iMM, iDD, iEEEE, etc.).
+ * Time and timezone tokens (HH, mm, ss, a, Z, z) are delegated to Luxon via the
+ * corresponding Gregorian date.
+ *
+ * @param hijriDate - the Hijri date to format
+ * @param format - a format string containing Hijri and/or Luxon tokens
+ * @returns the formatted date string
+ * @throws {RangeError} if the Hijri month is outside the 1-12 range
+ */
 export function formatHijriDate(hijriDate: HijriDate, format: string): string {
+  if (hijriDate.hm < 1 || hijriDate.hm > 12) {
+    throw new RangeError(`Hijri month must be 1-12, got ${hijriDate.hm}`);
+  }
+
   // Lazy Gregorian DateTime, computed at most once per format call,
   // only when a token that needs it is encountered.
   let _gregDt: DateTime | undefined;

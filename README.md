@@ -30,8 +30,8 @@ formatHijriDate({ hy: 1444, hm: 9, hd: 1 }, 'iEEEE, iD iMMMM iYYYY ioooo');
 // "Yawm al-Khamis, 1 Ramadan 1444 AH"
 
 // FCNA/ISNA calendar (astronomical, works for all Hijri years)
-toHijri(new Date(2025, 2, 1, 12), { calendar: 'fcna' });  // { hy: 1446, hm: 9, hd: 1 }
-toGregorian(1446, 9, 1, { calendar: 'fcna' });             // Date: 2025-03-01T00:00:00.000Z
+toHijri(new Date(2025, 2, 1, 12), { calendar: 'fcna' }); // { hy: 1446, hm: 9, hd: 1 }
+toGregorian(1446, 9, 1, { calendar: 'fcna' }); // Date: 2025-03-01T00:00:00.000Z
 ```
 
 ## API
@@ -41,7 +41,7 @@ toGregorian(1446, 9, 1, { calendar: 'fcna' });             // Date: 2025-03-01T0
 Converts a Gregorian `Date` to a Hijri date object.
 
 ```typescript
-function toHijri(date: Date, options?: ConversionOptions): HijriDate | null
+function toHijri(date: Date, options?: ConversionOptions): HijriDate | null;
 ```
 
 For `'uaq'` (default): returns `null` if the date falls outside the table range (before 1 Muharram 1318 H / 1900-04-30, or at/after 1 Muharram 1501 H / 2077-11-17). Uses local date components.
@@ -51,9 +51,9 @@ For `'fcna'`: returns `null` only for dates before 1 AH. Uses UTC date component
 Throws `Error("Invalid Gregorian date")` if `date` is not a valid `Date`.
 
 ```javascript
-toHijri(new Date(2024, 6, 7, 12))                           // { hy: 1446, hm: 1, hd: 1 }  (UAQ)
-toHijri(new Date(2025, 2, 1, 12), { calendar: 'fcna' })    // { hy: 1446, hm: 9, hd: 1 }  (FCNA)
-toHijri(new Date(1800, 0, 1))                               // null - before UAQ table range
+toHijri(new Date(2024, 6, 7, 12)); // { hy: 1446, hm: 1, hd: 1 }  (UAQ)
+toHijri(new Date(2025, 2, 1, 12), { calendar: 'fcna' }); // { hy: 1446, hm: 9, hd: 1 }  (FCNA)
+toHijri(new Date(1800, 0, 1)); // null - before UAQ table range
 ```
 
 ### `toGregorian(hy, hm, hd, options?)`
@@ -61,15 +61,15 @@ toHijri(new Date(1800, 0, 1))                               // null - before UAQ
 Converts a Hijri date to a Gregorian `Date` at UTC midnight.
 
 ```typescript
-function toGregorian(hy: number, hm: number, hd: number, options?: ConversionOptions): Date
+function toGregorian(hy: number, hm: number, hd: number, options?: ConversionOptions): Date;
 ```
 
 Throws `Error("Invalid Hijri date")` if the date is invalid for the selected calendar.
 
 ```javascript
-toGregorian(1446, 1, 1)                           // Date: 2024-07-07T00:00:00.000Z  (UAQ)
-toGregorian(1446, 9, 1, { calendar: 'fcna' })     // Date: 2025-03-01T00:00:00.000Z  (FCNA)
-toGregorian(1, 1, 1, { calendar: 'fcna' })        // Date: 0622-07-18T00:00:00.000Z  (Islamic epoch)
+toGregorian(1446, 1, 1); // Date: 2024-07-07T00:00:00.000Z  (UAQ)
+toGregorian(1446, 9, 1, { calendar: 'fcna' }); // Date: 2025-03-01T00:00:00.000Z  (FCNA)
+toGregorian(1, 1, 1, { calendar: 'fcna' }); // Date: 0622-07-18T00:00:00.000Z  (Islamic epoch)
 ```
 
 ### `formatHijriDate(date, format)`
@@ -77,37 +77,37 @@ toGregorian(1, 1, 1, { calendar: 'fcna' })        // Date: 0622-07-18T00:00:00.0
 Formats a Hijri date using the token patterns below. Tokens not listed pass through unchanged.
 
 ```typescript
-function formatHijriDate(date: HijriDate, format: string): string
+function formatHijriDate(date: HijriDate, format: string): string;
 ```
 
-| Token | Output | Example |
-| --- | --- | --- |
-| `iYYYY` | Year, 4 digits | `1444` |
-| `iYY` | Year, last 2 digits | `44` |
-| `iMMMM` | Month, full name | `Ramadan` |
-| `iMMM` | Month, medium name | `Ramadan` |
-| `iMM` | Month, zero-padded | `09` |
-| `iM` | Month, no padding | `9` |
-| `iDD` | Day, zero-padded | `01` |
-| `iD` | Day, no padding | `1` |
-| `iEEEE` | Weekday, full name | `Yawm al-Khamis` |
-| `iEEE` | Weekday, abbreviated | `Kham` |
-| `iE` | Weekday, numeric (Sun=1) | `5` |
-| `ioooo` | Era, full | `AH` |
-| `iooo` | Era, abbreviated | `AH` |
-| `HH`, `H`, `hh`, `h` | Hour (via Luxon) | `14`, `14`, `02`, `2` |
-| `mm`, `m` | Minute (via Luxon) | `05`, `5` |
-| `ss`, `s` | Second (via Luxon) | `30`, `30` |
-| `a` | AM/PM | `AM` |
-| `z`, `zz`, `zzz` | Timezone | `UTC` |
-| `Z`, `ZZ` | Timezone offset | `+00:00` |
+| Token                | Output                   | Example               |
+| -------------------- | ------------------------ | --------------------- |
+| `iYYYY`              | Year, 4 digits           | `1444`                |
+| `iYY`                | Year, last 2 digits      | `44`                  |
+| `iMMMM`              | Month, full name         | `Ramadan`             |
+| `iMMM`               | Month, medium name       | `Ramadan`             |
+| `iMM`                | Month, zero-padded       | `09`                  |
+| `iM`                 | Month, no padding        | `9`                   |
+| `iDD`                | Day, zero-padded         | `01`                  |
+| `iD`                 | Day, no padding          | `1`                   |
+| `iEEEE`              | Weekday, full name       | `Yawm al-Khamis`      |
+| `iEEE`               | Weekday, abbreviated     | `Kham`                |
+| `iE`                 | Weekday, numeric (Sun=1) | `5`                   |
+| `ioooo`              | Era, full                | `AH`                  |
+| `iooo`               | Era, abbreviated         | `AH`                  |
+| `HH`, `H`, `hh`, `h` | Hour (via Luxon)         | `14`, `14`, `02`, `2` |
+| `mm`, `m`            | Minute (via Luxon)       | `05`, `5`             |
+| `ss`, `s`            | Second (via Luxon)       | `30`, `30`            |
+| `a`                  | AM/PM                    | `AM`                  |
+| `z`, `zz`, `zzz`     | Timezone                 | `UTC`                 |
+| `Z`, `ZZ`            | Timezone offset          | `+00:00`              |
 
 ### `isValidHijriDate(hy, hm, hd, options?)`
 
 Returns `true` if the Hijri date is valid for the selected calendar.
 
 ```typescript
-function isValidHijriDate(hy: number, hm: number, hd: number, options?: ConversionOptions): boolean
+function isValidHijriDate(hy: number, hm: number, hd: number, options?: ConversionOptions): boolean;
 ```
 
 For `'uaq'` (default): year must be 1318–1500, month 1–12, day must not exceed the actual month length from the UAQ table.
@@ -130,11 +130,11 @@ interface ConversionOptions {
 }
 
 interface HijriYearRecord {
-  hy:  number; // Hijri year
+  hy: number; // Hijri year
   dpm: number; // days-per-month bitmask (bit 0 = month 1, 1 = 30 days, 0 = 29 days)
-  gy:  number; // Gregorian year of 1 Muharram
-  gm:  number; // Gregorian month of 1 Muharram
-  gd:  number; // Gregorian day of 1 Muharram
+  gy: number; // Gregorian year of 1 Muharram
+  gm: number; // Gregorian month of 1 Muharram
+  gd: number; // Gregorian day of 1 Muharram
 }
 ```
 
@@ -142,13 +142,13 @@ interface HijriYearRecord {
 
 ```javascript
 import {
-  hDatesTable,    // HijriYearRecord[] - the full Umm al-Qura table (184 entries)
-  hmLong,         // string[12] - full month names
-  hmMedium,       // string[12] - medium month names
-  hmShort,        // string[12] - abbreviated month names
-  hwLong,         // string[7] - full weekday names (Sunday first)
-  hwShort,        // string[7] - abbreviated weekday names
-  hwNumeric,      // number[7] - weekday numbers (1-7, Sunday=1)
+  hDatesTable, // HijriYearRecord[] - the full Umm al-Qura table (184 entries)
+  hmLong, // string[12] - full month names
+  hmMedium, // string[12] - medium month names
+  hmShort, // string[12] - abbreviated month names
+  hwLong, // string[7] - full weekday names (Sunday first)
+  hwShort, // string[7] - abbreviated weekday names
+  hwNumeric, // number[7] - weekday numbers (1-7, Sunday=1)
   formatPatterns, // Record<string, string> - token reference
 } from 'luxon-hijri';
 ```

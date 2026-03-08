@@ -15,20 +15,20 @@ Different countries and communities follow different approaches.
 
 ## Hijri Months
 
-| No. | Arabic Name | Common Transliteration |
-| --- | --- | --- |
-| 1 | محرم | Muharram |
-| 2 | صفر | Safar |
-| 3 | ربيع الأول | Rabi' al-Awwal |
-| 4 | ربيع الثاني | Rabi' al-Thani |
-| 5 | جمادى الأولى | Jumada al-Awwal |
-| 6 | جمادى الآخرة | Jumada al-Thani |
-| 7 | رجب | Rajab |
-| 8 | شعبان | Sha'ban |
-| 9 | رمضان | Ramadan |
-| 10 | شوال | Shawwal |
-| 11 | ذو القعدة | Dhul Qi'dah |
-| 12 | ذو الحجة | Dhul Hijjah |
+| No. | Arabic Name  | Common Transliteration |
+| --- | ------------ | ---------------------- |
+| 1   | محرم         | Muharram               |
+| 2   | صفر          | Safar                  |
+| 3   | ربيع الأول   | Rabi' al-Awwal         |
+| 4   | ربيع الثاني  | Rabi' al-Thani         |
+| 5   | جمادى الأولى | Jumada al-Awwal        |
+| 6   | جمادى الآخرة | Jumada al-Thani        |
+| 7   | رجب          | Rajab                  |
+| 8   | شعبان        | Sha'ban                |
+| 9   | رمضان        | Ramadan                |
+| 10  | شوال         | Shawwal                |
+| 11  | ذو القعدة    | Dhul Qi'dah            |
+| 12  | ذو الحجة     | Dhul Hijjah            |
 
 Months alternate between 29 and 30 days. Dhul Hijjah has 29 days in a normal year and 30 in a leap year.
 
@@ -36,15 +36,15 @@ Months alternate between 29 and 30 days. Dhul Hijjah has 29 days in a normal yea
 
 The Islamic week begins on Sunday. Friday (Yawm al-Jum'a) is the day of congregational prayer.
 
-| No. | Arabic Name | Transliteration |
-| --- | --- | --- |
-| 1 | الأحد | Yawm al-Ahad (Sunday) |
-| 2 | الاثنين | Yawm al-Ithnayn (Monday) |
-| 3 | الثلاثاء | Yawm ath-Thulatha' (Tuesday) |
-| 4 | الأربعاء | Yawm al-Arba'a' (Wednesday) |
-| 5 | الخميس | Yawm al-Khamis (Thursday) |
-| 6 | الجمعة | Yawm al-Jum'a (Friday) |
-| 7 | السبت | Yawm as-Sabt (Saturday) |
+| No. | Arabic Name | Transliteration              |
+| --- | ----------- | ---------------------------- |
+| 1   | الأحد       | Yawm al-Ahad (Sunday)        |
+| 2   | الاثنين     | Yawm al-Ithnayn (Monday)     |
+| 3   | الثلاثاء    | Yawm ath-Thulatha' (Tuesday) |
+| 4   | الأربعاء    | Yawm al-Arba'a' (Wednesday)  |
+| 5   | الخميس      | Yawm al-Khamis (Thursday)    |
+| 6   | الجمعة      | Yawm al-Jum'a (Friday)       |
+| 7   | السبت       | Yawm as-Sabt (Saturday)      |
 
 ## The Umm al-Qura Calendar
 
@@ -84,11 +84,11 @@ A Hijri year has either 354 days (12 months × 29.5 days average) or 355 days. T
 
 ## Epoch and Date Range
 
-| | Hijri | Gregorian |
-| --- | --- | --- |
-| Table start | 1 Muharram 1318 H | April 30, 1900 |
-| Table end | Last day of Dhul Hijjah 1500 H | ~November 2076 |
-| Sentinel boundary | 1 Muharram 1501 H | November 17, 2077 |
+|                   | Hijri                          | Gregorian         |
+| ----------------- | ------------------------------ | ----------------- |
+| Table start       | 1 Muharram 1318 H              | April 30, 1900    |
+| Table end         | Last day of Dhul Hijjah 1500 H | ~November 2076    |
+| Sentinel boundary | 1 Muharram 1501 H              | November 17, 2077 |
 
 For the Umm al-Qura calendar (default), dates outside this range return `null` from `toHijri` and throw from `toGregorian`. The FCNA calendar supports all Hijri years and has no range limit.
 

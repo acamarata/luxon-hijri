@@ -37,8 +37,11 @@
     "build": "tsup",
     "typecheck": "tsc --noEmit",
     "pretest": "tsup",
-    "test": "node test.mjs && node test-cjs.cjs",
-    "prepublishOnly": "tsup"
+    "test": "node --test test.mjs && node --test test-cjs.cjs",
+    "prepublishOnly": "tsup",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "hijri",
@@ -57,10 +60,15 @@
     "luxon": "^3.5.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/luxon": "^3.4.2",
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.15.0",
+    "eslint": "^10.0.3",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.1",
     "tsup": "^8.0.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.56.1"
   },
   "publishConfig": {
     "access": "public",
