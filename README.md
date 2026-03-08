@@ -192,6 +192,10 @@ Full API reference, architecture notes, calendar background, and format token gu
 - [pray-calc](https://www.npmjs.com/package/pray-calc): Islamic prayer times, depends on nrel-spa
 - [solar-spa](https://www.npmjs.com/package/solar-spa): NREL SPA compiled to WebAssembly
 
+## Acknowledgments
+
+The Umm al-Qura table is derived from data published by the King Abdulaziz City for Science and Technology (KACST). The FCNA new moon algorithm follows Jean Meeus, "Astronomical Algorithms," 2nd ed., Chapter 49.
+
 ## License
 
 MIT. Copyright (c) 2024-2026 Aric Camarata.
