@@ -4,14 +4,14 @@ on:
   push:
     branches: [main]
     paths:
-      - '.wiki/**'
+      - '.github/wiki/**'
 
 permissions:
   contents: write
 
 jobs:
   sync:
-    name: Sync .wiki/ to GitHub Wiki
+    name: Sync .github/wiki/ to GitHub Wiki
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,7 +25,7 @@ jobs:
 
       - name: Copy wiki files
         run: |
-          cp .wiki/*.md wiki-repo/
+          cp .github/wiki/*.md wiki-repo/
 
       - name: Commit and push
         working-directory: wiki-repo
@@ -33,5 +33,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --cached --quiet || git commit -m "Sync wiki from .wiki/ [skip ci]"
+          git diff --cached --quiet || git commit -m "Sync wiki from .github/wiki/ [skip ci]"
           git push
