@@ -8,8 +8,12 @@ Hijri/Gregorian date conversion and formatting. Supports two calendar systems: U
 
 ## Installation
 
+`luxon-hijri` requires `luxon` and `hijri-core` as peer dependencies. Install all three:
+
 ```bash
-npm install luxon-hijri
+pnpm add luxon-hijri luxon hijri-core
+# or
+npm install luxon-hijri luxon hijri-core
 ```
 
 ## Quick Start
