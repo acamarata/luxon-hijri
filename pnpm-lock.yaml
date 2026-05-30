@@ -8,6 +8,15 @@ importers:
 
   .:
     devDependencies:
+      '@acamarata/eslint-config':
+        specifier: ^0.1.0
+        version: 0.1.0(@typescript-eslint/eslint-plugin@8.56.1(@typescript-eslint/parser@8.56.1(eslint@10.0.3)(typescript@5.9.3))(eslint@10.0.3)(typescript@5.9.3))(@typescript-eslint/parser@8.56.1(eslint@10.0.3)(typescript@5.9.3))(eslint-config-prettier@10.1.8(eslint@10.0.3))(eslint@10.0.3)
+      '@acamarata/prettier-config':
+        specifier: ^0.1.0
+        version: 0.1.0(prettier@3.8.1)
+      '@acamarata/tsconfig':
+        specifier: ^0.1.0
+        version: 0.1.0
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.0.3)
@@ -43,6 +52,32 @@ importers:
         version: 8.56.1(eslint@10.0.3)(typescript@5.9.3)
 
 packages:
+
+  '@acamarata/eslint-config@0.1.0':
+    resolution: {integrity: sha512-St2TObpHKXBLBy1GPrXWlHzXCujJ7jaor6BuWRdLMTOjM56LPBDJx+898R7yFyI8Wi52VWNZdSTPxzHuyRAq+A==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@typescript-eslint/eslint-plugin': '>=8.0.0'
+      '@typescript-eslint/parser': '>=8.0.0'
+      eslint: '>=9.0.0'
+      eslint-config-prettier: '>=9.0.0'
+      eslint-plugin-react: '>=7.0.0'
+      eslint-plugin-react-hooks: '>=5.0.0'
+    peerDependenciesMeta:
+      eslint-plugin-react:
+        optional: true
+      eslint-plugin-react-hooks:
+        optional: true
+
+  '@acamarata/prettier-config@0.1.0':
+    resolution: {integrity: sha512-ImMnz/653ettR4gJVd1f7Pz61DQSeDmUtguLrnCl8RdYncqfghT+QGEO5Znml0KvgX3vk4c4roPAWYdXaZgcPA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      prettier: '>=3.0.0'
+
+  '@acamarata/tsconfig@0.1.0':
+    resolution: {integrity: sha512-bgzyBak43mE+0HhduZX3cvaPjKcggtGGZZMjr35qtYWolsIWgZ9nx7OOswbVYoU35qoUv6rZ0mTK6GbZ8QTYjw==}
+    engines: {node: '>=20'}
 
   '@esbuild/aix-ppc64@0.27.3':
     resolution: {integrity: sha512-9fJMTNFTWZMh5qwrBItuziu834eOCUcEqymSH7pY+zoMVEZg3gcPuBNxH1EvfVYe9h0x/Ptw8KBzv7qxb7l8dg==}
@@ -924,6 +959,19 @@ packages:
     engines: {node: '>=10'}
 
 snapshots:
+
+  '@acamarata/eslint-config@0.1.0(@typescript-eslint/eslint-plugin@8.56.1(@typescript-eslint/parser@8.56.1(eslint@10.0.3)(typescript@5.9.3))(eslint@10.0.3)(typescript@5.9.3))(@typescript-eslint/parser@8.56.1(eslint@10.0.3)(typescript@5.9.3))(eslint-config-prettier@10.1.8(eslint@10.0.3))(eslint@10.0.3)':
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 8.56.1(@typescript-eslint/parser@8.56.1(eslint@10.0.3)(typescript@5.9.3))(eslint@10.0.3)(typescript@5.9.3)
+      '@typescript-eslint/parser': 8.56.1(eslint@10.0.3)(typescript@5.9.3)
+      eslint: 10.0.3
+      eslint-config-prettier: 10.1.8(eslint@10.0.3)
+
+  '@acamarata/prettier-config@0.1.0(prettier@3.8.1)':
+    dependencies:
+      prettier: 3.8.1
+
+  '@acamarata/tsconfig@0.1.0': {}
 
   '@esbuild/aix-ppc64@0.27.3':
     optional: true

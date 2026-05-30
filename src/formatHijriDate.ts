@@ -38,7 +38,7 @@ export function formatHijriDate(hijriDate: HijriDate, format: string): string {
     return _gregDt;
   }
 
-  return format.replace(TOKEN_RE, (match) => {
+  return format.replace(TOKEN_RE, (match): string => {
     switch (match) {
       case 'iYYYY':
         return String(hijriDate.hy).padStart(4, '0');
@@ -49,9 +49,12 @@ export function formatHijriDate(hijriDate: HijriDate, format: string): string {
       case 'iM':
         return String(hijriDate.hm);
       case 'iMMM':
-        return hmMedium[hijriDate.hm - 1];
+        // Non-null: hm is validated 1-12 above; index hm-1 is always 0-11, within array bounds.
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return hmMedium[hijriDate.hm - 1]!;
       case 'iMMMM':
-        return hmLong[hijriDate.hm - 1];
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return hmLong[hijriDate.hm - 1]!;
       case 'iDD':
         return String(hijriDate.hd).padStart(2, '0');
       case 'iD':
@@ -62,9 +65,13 @@ export function formatHijriDate(hijriDate: HijriDate, format: string): string {
         // Luxon weekday: 1=Mon … 7=Sun. Modulo 7: Mon=1 … Sat=6, Sun=0.
         // hwLong/hwShort/hwNumeric arrays: index 0=Sunday, 1=Monday, … 6=Saturday.
         const idx = getGregDt().weekday % 7;
-        if (match === 'iE') return String(hwNumeric[idx]);
-        if (match === 'iEEE') return hwShort[idx];
-        return hwLong[idx];
+        // Non-null: idx is always 0-6 (weekday%7), within all hw* array bounds.
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        if (match === 'iE') return String(hwNumeric[idx]!);
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        if (match === 'iEEE') return hwShort[idx]!;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return hwLong[idx]!;
       }
       case 'iooo':
       case 'ioooo':

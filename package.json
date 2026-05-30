@@ -66,13 +66,16 @@
     }
   },
   "devDependencies": {
+    "@acamarata/eslint-config": "^0.1.0",
+    "@acamarata/prettier-config": "^0.1.0",
+    "@acamarata/tsconfig": "^0.1.0",
     "@eslint/js": "^10.0.1",
     "@types/luxon": "^3.4.2",
-    "hijri-core": "^1.0.0",
-    "luxon": "^3.5.0",
     "@types/node": "^22.15.0",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
+    "hijri-core": "^1.0.0",
+    "luxon": "^3.5.0",
     "prettier": "^3.8.1",
     "tsup": "^8.0.0",
     "typescript": "^5.5.0",
@@ -90,5 +93,6 @@
   "bugs": {
     "url": "https://github.com/acamarata/luxon-hijri/issues"
   },
-  "type": "module"
+  "type": "module",
+  "prettier": "@acamarata/prettier-config"
 }
