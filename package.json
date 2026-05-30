@@ -1,6 +1,6 @@
 {
   "name": "luxon-hijri",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Hijri/Gregorian date conversion and formatting using the Umm al-Qura calendar. Built on Luxon. Supports toHijri, toGregorian, formatHijriDate, and isValidHijriDate.",
   "author": "Aric Camarata",
   "license": "MIT",

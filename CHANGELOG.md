@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.1] - 2026-05-30
+
+### Fixed
+
+- Improved type safety in `formatHijriDate`: explicit return type annotation on `replace` callback and non-null assertions on array lookups with JSDoc justification comments.
+- Added in-code comment blocks to all source modules documenting purpose, inputs, outputs, constraints, and SPORT references.
+
 ## [3.0.0] - 2026-05-28
 
 ### Changed
