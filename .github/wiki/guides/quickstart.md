@@ -35,7 +35,7 @@ import { toHijri, formatHijriDate } from 'luxon-hijri';
 const h = toHijri(new Date('2025-03-20'));
 
 if (h) {
-  console.log(formatHijriDate(h, 'D MMMM YYYY AH'));
+  console.log(formatHijriDate(h, 'iD iMMMM iYYYY ioooo'));
   // 20 Ramadan 1446 AH
 }
 ```
@@ -60,7 +60,7 @@ const dt  = DateTime.fromISO('2025-03-20');
 const h   = toHijri(dt.toJSDate());
 
 if (h) {
-  const formatted = formatHijriDate(h, 'D MMMM YYYY');
+  const formatted = formatHijriDate(h, 'iD iMMMM iYYYY');
   console.log(`${dt.toFormat('DD')} = ${formatted} AH`);
   // March 20, 2025 = 20 Ramadan 1446 AH
 }

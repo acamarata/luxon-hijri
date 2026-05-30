@@ -1,3 +1,10 @@
+/**
+ * Purpose: Reference map of all supported format tokens to their human-readable descriptions.
+ * Inputs: n/a — static data export
+ * Outputs: Record<string, string> mapping token string to description
+ * Constraints: keys must match the TOKEN_RE in formatHijriDate.ts; used for documentation and introspection
+ * SPORT: packages.md — luxon-hijri row
+ */
 // formatPatterns.ts
 // Define a mapping of Hijri format tokens to their meanings
 export const formatPatterns = {

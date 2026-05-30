@@ -2,45 +2,45 @@
 
 ## Format tokens
 
-`formatHijriDate` supports these tokens:
+All Hijri-specific tokens use the `i` prefix. For the full token table, see the [API Reference](../API-Reference).
+
+Common tokens:
 
 | Token | Example | Description |
 |-------|---------|-------------|
-| `D`   | `1`–`30` | Hijri day, no padding |
-| `DD`  | `01`–`30` | Hijri day, zero-padded |
-| `M`   | `1`–`12` | Hijri month number, no padding |
-| `MM`  | `01`–`12` | Hijri month number, zero-padded |
-| `MMMM` | `Ramadan` | Full Hijri month name |
-| `MMMMM` | `Ramaḍān` (transliteration variant) | Extended name (where available) |
-| `YY`  | `46`    | Last two digits of Hijri year |
-| `YYYY` | `1446` | Full Hijri year |
+| `iD`   | `1`–`30` | Hijri day, no padding |
+| `iDD`  | `01`–`30` | Hijri day, zero-padded |
+| `iM`   | `1`–`12` | Hijri month number, no padding |
+| `iMM`  | `01`–`12` | Hijri month number, zero-padded |
+| `iMMMM` | `Ramadan` | Full Hijri month name |
+| `iYY`  | `46`    | Last two digits of Hijri year |
+| `iYYYY` | `1446` | Full Hijri year |
+| `ioooo` | `AH` | Hijri era |
 
 ```js
 import { toHijri, formatHijriDate } from 'luxon-hijri';
 
 const h = toHijri(new Date('2025-03-20'));
 
-console.log(formatHijriDate(h, 'DD/MM/YYYY'));    // 20/09/1446
-console.log(formatHijriDate(h, 'D MMMM YYYY'));   // 20 Ramadan 1446
-console.log(formatHijriDate(h, 'D MMMM YYYY AH')); // 20 Ramadan 1446 AH
+console.log(formatHijriDate(h, 'iDD/iMM/iYYYY'));         // 20/09/1446
+console.log(formatHijriDate(h, 'iD iMMMM iYYYY'));        // 20 Ramadan 1446
+console.log(formatHijriDate(h, 'iD iMMMM iYYYY ioooo')); // 20 Ramadan 1446 AH
 ```
 
 ## Hijri date arithmetic with Luxon
 
-Luxon handles Gregorian arithmetic. Combine with hijri-core conversions for Hijri-aware date math:
+Luxon handles Gregorian arithmetic. Use `toGregorian` to convert Hijri endpoints, then work in Gregorian:
 
 ```js
 import { DateTime } from 'luxon';
-import { toHijri, toGregorian, daysInHijriMonth } from 'luxon-hijri';
+import { toHijri, toGregorian } from 'luxon-hijri';
 
-// Find the last day of this Ramadan
+// Find when Eid al-Fitr (1 Shawwal) starts for this year
 const today = new Date();
 const h = toHijri(today);
 
 if (h) {
-  const lastDay  = daysInHijriMonth(h.hy, 9);   // 29 or 30
-  const eidStart = toGregorian(h.hy, 10, 1);     // 1 Shawwal
-
+  const eidStart = toGregorian(h.hy, 10, 1); // 1 Shawwal
   const eid = DateTime.fromJSDate(eidStart);
   console.log(`Eid al-Fitr ${h.hy}: ${eid.toFormat('MMMM d, yyyy')}`);
 }
@@ -48,14 +48,19 @@ if (h) {
 
 ## Generating a Hijri month calendar
 
+The UAQ table encodes day counts per month in a bitmask. To iterate a month, convert each Hijri day to Gregorian and stop when `toGregorian` throws:
+
 ```js
-import { toGregorian, daysInHijriMonth } from 'luxon-hijri';
+import { toGregorian } from 'luxon-hijri';
 import { DateTime } from 'luxon';
 
 const HY = 1446;
 const HM = 9; // Ramadan
 
-const days  = daysInHijriMonth(HY, HM);
+// Determine the month length (29 or 30 days)
+let days = 29;
+try { toGregorian(HY, HM, 30); days = 30; } catch (_) {}
+
 const NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 console.log(`Ramadan ${HY}\n`);

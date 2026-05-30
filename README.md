@@ -3,6 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/luxon-hijri.svg)](https://www.npmjs.com/package/luxon-hijri)
 [![CI](https://github.com/acamarata/luxon-hijri/actions/workflows/ci.yml/badge.svg)](https://github.com/acamarata/luxon-hijri/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Wiki](https://img.shields.io/badge/docs-wiki-blue)](https://github.com/acamarata/luxon-hijri/wiki)
 
 Hijri/Gregorian date conversion and formatting for Luxon users. Thin adapter over [hijri-core](https://github.com/acamarata/hijri-core). Supports the Umm al-Qura calendar (1318-1500 AH, table-based) and the FCNA/ISNA calendar (astronomical, all Hijri years).
 

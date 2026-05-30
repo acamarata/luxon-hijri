@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Push wiki pages
+      - name: Checkout wiki repo
         uses: actions/checkout@v4
         with:
           repository: ${{ github.repository }}.wiki
@@ -25,7 +25,14 @@ jobs:
 
       - name: Copy wiki files
         run: |
+          # Copy root wiki pages
           cp .github/wiki/*.md wiki-repo/
+          # Copy subdirectories (api/, guides/, examples/, benchmarks/)
+          for dir in .github/wiki/*/; do
+            subdir=$(basename "$dir")
+            mkdir -p "wiki-repo/$subdir"
+            cp "$dir"*.md "wiki-repo/$subdir/" 2>/dev/null || true
+          done
 
       - name: Commit and push
         working-directory: wiki-repo
