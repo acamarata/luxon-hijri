@@ -36,9 +36,10 @@
     "test": "node --test test.mjs && node --test test-cjs.cjs",
     "prepublishOnly": "tsup",
     "lint": "eslint .",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "coverage": "c8 --reporter=lcov --reporter=text node --test"
+    "format": "prettier --write src/",
+    "format:check": "prettier --check src/",
+    "coverage": "c8 --reporter=lcov --reporter=text node --test",
+    "postbuild": "cp dist/index.d.ts dist/index.d.mts"
   },
   "keywords": [
     "hijri",
