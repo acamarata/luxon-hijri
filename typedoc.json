@@ -1,0 +1,10 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "out": ".github/wiki/api",
+  "plugin": ["typedoc-plugin-markdown"],
+  "readme": "none",
+  "skipErrorChecking": false,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "includeVersion": true
+}

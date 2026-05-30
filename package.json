@@ -38,7 +38,8 @@
     "lint": "eslint .",
     "format": "prettier --write src/",
     "format:check": "prettier --check src/",
-    "coverage": "c8 --reporter=lcov --reporter=text node --test",
+    "coverage": "c8 --reporter=lcov --reporter=text node test.mjs",
+    "docs": "typedoc --out .github/wiki/api src/index.ts",
     "postbuild": "cp dist/index.d.ts dist/index.d.mts"
   },
   "keywords": [
@@ -78,8 +79,11 @@
     "luxon": "^3.5.0",
     "prettier": "^3.8.1",
     "tsup": "^8.0.0",
+    "typedoc": "^0.28.19",
+    "typedoc-plugin-markdown": "^4.11.0",
     "typescript": "^5.5.0",
-    "typescript-eslint": "^8.56.1"
+    "typescript-eslint": "^8.56.1",
+    "c8": "^10.1.2"
   },
   "publishConfig": {
     "access": "public",
