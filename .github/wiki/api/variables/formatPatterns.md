@@ -8,7 +8,7 @@
 
 > `const` **formatPatterns**: `object`
 
-Defined in: [src/formatPatterns.ts:10](https://github.com/acamarata/luxon-hijri/blob/19dc465d7f7d279e07bf7505e42f4bba5f93ef3b/src/formatPatterns.ts#L10)
+Defined in: [src/formatPatterns.ts:10](https://github.com/acamarata/luxon-hijri/blob/e663b343ac1cd16188500a4302fd3e68ff29b3c1/src/formatPatterns.ts#L10)
 
 Purpose: Reference map of all supported format tokens to their human-readable descriptions.
 Inputs: n/a — static data export

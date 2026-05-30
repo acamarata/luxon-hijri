@@ -8,7 +8,7 @@
 
 > **toGregorian**(`hy`, `hm`, `hd`, `options?`): `Date`
 
-Defined in: [src/toGregorian.ts:25](https://github.com/acamarata/luxon-hijri/blob/19dc465d7f7d279e07bf7505e42f4bba5f93ef3b/src/toGregorian.ts#L25)
+Defined in: [src/toGregorian.ts:25](https://github.com/acamarata/luxon-hijri/blob/e663b343ac1cd16188500a4302fd3e68ff29b3c1/src/toGregorian.ts#L25)
 
 Convert a Hijri date to a Gregorian Date object.
 

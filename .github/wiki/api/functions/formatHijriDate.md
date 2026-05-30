@@ -8,7 +8,7 @@
 
 > **formatHijriDate**(`hijriDate`, `format`): `string`
 
-Defined in: [src/formatHijriDate.ts:24](https://github.com/acamarata/luxon-hijri/blob/19dc465d7f7d279e07bf7505e42f4bba5f93ef3b/src/formatHijriDate.ts#L24)
+Defined in: [src/formatHijriDate.ts:24](https://github.com/acamarata/luxon-hijri/blob/e663b343ac1cd16188500a4302fd3e68ff29b3c1/src/formatHijriDate.ts#L24)
 
 Format a Hijri date using a token-based format string.
 

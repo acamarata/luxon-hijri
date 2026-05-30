@@ -8,7 +8,7 @@
 
 > **CalendarSystem** = `"uaq"` \| `"fcna"`
 
-Defined in: [src/types.ts:20](https://github.com/acamarata/luxon-hijri/blob/19dc465d7f7d279e07bf7505e42f4bba5f93ef3b/src/types.ts#L20)
+Defined in: [src/types.ts:20](https://github.com/acamarata/luxon-hijri/blob/e663b343ac1cd16188500a4302fd3e68ff29b3c1/src/types.ts#L20)
 
 Built-in calendar system identifiers.
 
