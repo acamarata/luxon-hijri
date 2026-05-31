@@ -1,9 +1,9 @@
 // formatHijriDate.ts
-import { DateTime } from 'luxon';
-import { hmLong, hmMedium } from './hMonths';
-import { hwLong, hwShort, hwNumeric } from './hWeekdays';
-import { toGregorian } from './toGregorian';
-import type { HijriDate } from './types';
+import { DateTime } from "luxon";
+import { hmLong, hmMedium } from "./hMonths";
+import { hwLong, hwShort, hwNumeric } from "./hWeekdays";
+import { toGregorian } from "./toGregorian";
+import type { HijriDate } from "./types";
 
 // Token regex: longest tokens first to prevent partial matches.
 const TOKEN_RE =
@@ -33,49 +33,49 @@ export function formatHijriDate(hijriDate: HijriDate, format: string): string {
   function getGregDt(): DateTime {
     if (!_gregDt) {
       const greg = toGregorian(hijriDate.hy, hijriDate.hm, hijriDate.hd);
-      _gregDt = DateTime.fromJSDate(greg, { zone: 'UTC' });
+      _gregDt = DateTime.fromJSDate(greg, { zone: "UTC" });
     }
     return _gregDt;
   }
 
   return format.replace(TOKEN_RE, (match): string => {
     switch (match) {
-      case 'iYYYY':
-        return String(hijriDate.hy).padStart(4, '0');
-      case 'iYY':
-        return String(hijriDate.hy % 100).padStart(2, '0');
-      case 'iMM':
-        return String(hijriDate.hm).padStart(2, '0');
-      case 'iM':
+      case "iYYYY":
+        return String(hijriDate.hy).padStart(4, "0");
+      case "iYY":
+        return String(hijriDate.hy % 100).padStart(2, "0");
+      case "iMM":
+        return String(hijriDate.hm).padStart(2, "0");
+      case "iM":
         return String(hijriDate.hm);
-      case 'iMMM':
+      case "iMMM":
         // Non-null: hm is validated 1-12 above; index hm-1 is always 0-11, within array bounds.
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return hmMedium[hijriDate.hm - 1]!;
-      case 'iMMMM':
+      case "iMMMM":
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return hmLong[hijriDate.hm - 1]!;
-      case 'iDD':
-        return String(hijriDate.hd).padStart(2, '0');
-      case 'iD':
+      case "iDD":
+        return String(hijriDate.hd).padStart(2, "0");
+      case "iD":
         return String(hijriDate.hd);
-      case 'iE':
-      case 'iEEE':
-      case 'iEEEE': {
+      case "iE":
+      case "iEEE":
+      case "iEEEE": {
         // Luxon weekday: 1=Mon … 7=Sun. Modulo 7: Mon=1 … Sat=6, Sun=0.
         // hwLong/hwShort/hwNumeric arrays: index 0=Sunday, 1=Monday, … 6=Saturday.
         const idx = getGregDt().weekday % 7;
         // Non-null: idx is always 0-6 (weekday%7), within all hw* array bounds.
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (match === 'iE') return String(hwNumeric[idx]!);
+        if (match === "iE") return String(hwNumeric[idx]!);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (match === 'iEEE') return hwShort[idx]!;
+        if (match === "iEEE") return hwShort[idx]!;
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return hwLong[idx]!;
       }
-      case 'iooo':
-      case 'ioooo':
-        return 'AH';
+      case "iooo":
+      case "ioooo":
+        return "AH";
       default:
         // Delegate time and timezone tokens to Luxon using the Gregorian DateTime.
         return getGregDt().toFormat(match);

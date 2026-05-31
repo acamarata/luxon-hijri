@@ -6,4 +6,4 @@
  * SPORT: packages.md — luxon-hijri row
  */
 // hWeekdays.ts: re-exports from hijri-core
-export { hwLong, hwShort, hwNumeric } from 'hijri-core';
+export { hwLong, hwShort, hwNumeric } from "hijri-core";

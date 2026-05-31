@@ -6,4 +6,4 @@
  * SPORT: packages.md — luxon-hijri row
  */
 // utils.ts: delegates to hijri-core
-export { isValidHijriDate } from 'hijri-core';
+export { isValidHijriDate } from "hijri-core";

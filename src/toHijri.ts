@@ -6,4 +6,4 @@
  * SPORT: packages.md — luxon-hijri row
  */
 // toHijri.ts: delegates to hijri-core
-export { toHijri } from 'hijri-core';
+export { toHijri } from "hijri-core";

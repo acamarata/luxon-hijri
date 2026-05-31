@@ -73,6 +73,9 @@
     "@eslint/js": "^10.0.1",
     "@types/luxon": "^3.4.2",
     "@types/node": "^22.15.0",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "c8": "^10.1.2",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
     "hijri-core": "^1.0.0",
@@ -82,8 +85,7 @@
     "typedoc": "^0.28.19",
     "typedoc-plugin-markdown": "^4.11.0",
     "typescript": "^5.5.0",
-    "typescript-eslint": "^8.56.1",
-    "c8": "^10.1.2"
+    "typescript-eslint": "^8.56.1"
   },
   "publishConfig": {
     "access": "public",

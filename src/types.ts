@@ -6,7 +6,7 @@
  * SPORT: packages.md — luxon-hijri row
  */
 // types.ts: re-exports from hijri-core for backward compatibility
-export type { HijriDate, HijriYearRecord, ConversionOptions } from 'hijri-core';
+export type { HijriDate, HijriYearRecord, ConversionOptions } from "hijri-core";
 
 /**
  * Built-in calendar system identifiers.
@@ -17,4 +17,4 @@ export type { HijriDate, HijriYearRecord, ConversionOptions } from 'hijri-core';
  * hijri-core accepts any string identifier via `registerCalendar()`. This type covers
  * the built-in defaults only.
  */
-export type CalendarSystem = 'uaq' | 'fcna';
+export type CalendarSystem = "uaq" | "fcna";
