@@ -42,8 +42,8 @@ importers:
         specifier: ^10.1.8
         version: 10.1.8(eslint@10.0.3)
       hijri-core:
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.0.3
+        version: 1.0.3
       luxon:
         specifier: ^3.5.0
         version: 3.7.2
@@ -1028,8 +1028,8 @@ packages:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
 
-  hijri-core@1.0.0:
-    resolution: {integrity: sha512-wImBZLBKbEWEEUE1nrc1CFY/uvx4XjGNWYChImJZlswXIVhrBCzSVaj6DP1AU2gUMJ6KDh2ygXo/u/Qx232CXA==}
+  hijri-core@1.0.3:
+    resolution: {integrity: sha512-ONT5gp+Z/lzT/BbWKS0F8lcKK9T/H6jc95NLQE4Angdt7Uimo4KkmSt/qn9odaQRp1pX0RjA65QRcR4miF7XxA==}
     engines: {node: '>=20'}
 
   html-escaper@2.0.2:
@@ -2364,7 +2364,7 @@ snapshots:
 
   has-flag@4.0.0: {}
 
-  hijri-core@1.0.0: {}
+  hijri-core@1.0.3: {}
 
   html-escaper@2.0.2: {}
 
