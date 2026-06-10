@@ -95,23 +95,23 @@ describe('toGregorian - error cases', () => {
 
 describe('toHijri - known dates', () => {
   it('2022-07-30 = 1 Muharram 1444', () => {
-    const h = toHijri(new Date(2022, 6, 30, 12));
+    const h = toHijri(new Date(Date.UTC(2022, 6, 30)));
     assert.deepEqual(h, { hy: 1444, hm: 1, hd: 1 });
   });
   it('2023-03-23 = 1 Ramadan 1444', () => {
-    const h = toHijri(new Date(2023, 2, 23, 12));
+    const h = toHijri(new Date(Date.UTC(2023, 2, 23)));
     assert.deepEqual(h, { hy: 1444, hm: 9, hd: 1 });
   });
   it('2023-04-21 = 1 Shawwal 1444', () => {
-    const h = toHijri(new Date(2023, 3, 21, 12));
+    const h = toHijri(new Date(Date.UTC(2023, 3, 21)));
     assert.deepEqual(h, { hy: 1444, hm: 10, hd: 1 });
   });
   it('2024-07-07 = 1 Muharram 1446', () => {
-    const h = toHijri(new Date(2024, 6, 7, 12));
+    const h = toHijri(new Date(Date.UTC(2024, 6, 7)));
     assert.deepEqual(h, { hy: 1446, hm: 1, hd: 1 });
   });
   it('1900-04-30 = 1 Muharram 1318 (first table entry)', () => {
-    const h = toHijri(new Date(1900, 3, 30, 12));
+    const h = toHijri(new Date(Date.UTC(1900, 3, 30)));
     assert.deepEqual(h, { hy: 1318, hm: 1, hd: 1 });
   });
 });
@@ -274,15 +274,15 @@ describe('FCNA toGregorian', () => {
 
 describe('FCNA toHijri', () => {
   it('2025-03-01 = 1 Ramadan 1446', () => {
-    const h = toHijri(new Date(2025, 2, 1, 12), FCNA);
+    const h = toHijri(new Date(Date.UTC(2025, 2, 1)), FCNA);
     assert.deepEqual(h, { hy: 1446, hm: 9, hd: 1 });
   });
   it('2025-03-30 = 1 Shawwal 1446', () => {
-    const h = toHijri(new Date(2025, 2, 30, 12), FCNA);
+    const h = toHijri(new Date(Date.UTC(2025, 2, 30)), FCNA);
     assert.deepEqual(h, { hy: 1446, hm: 10, hd: 1 });
   });
   it('2024-03-11 = 1 Ramadan 1445', () => {
-    const h = toHijri(new Date(2024, 2, 11, 12), FCNA);
+    const h = toHijri(new Date(Date.UTC(2024, 2, 11)), FCNA);
     assert.deepEqual(h, { hy: 1445, hm: 9, hd: 1 });
   });
 });
@@ -312,6 +312,36 @@ describe('FCNA round-trips', () => {
   });
 });
 
+describe('UAQ round-trips (default engine)', () => {
+  it('1444/1/1 toGregorian then toHijri', () => {
+    const greg = toGregorian(1444, 1, 1);
+    const hijri = toHijri(greg);
+    assert.deepEqual(hijri, { hy: 1444, hm: 1, hd: 1 });
+  });
+  it('1444/9/1 toGregorian then toHijri', () => {
+    const greg = toGregorian(1444, 9, 1);
+    const hijri = toHijri(greg);
+    assert.deepEqual(hijri, { hy: 1444, hm: 9, hd: 1 });
+  });
+  it('1446/9/1 toGregorian then toHijri', () => {
+    const greg = toGregorian(1446, 9, 1);
+    const hijri = toHijri(greg);
+    assert.deepEqual(hijri, { hy: 1446, hm: 9, hd: 1 });
+  });
+  it('1318/1/1 toGregorian then toHijri (first table entry)', () => {
+    const greg = toGregorian(1318, 1, 1);
+    assert(greg instanceof Date);
+    const hijri = toHijri(greg);
+    assert.deepEqual(hijri, { hy: 1318, hm: 1, hd: 1 });
+  });
+  it('1500/12/29 toGregorian then toHijri (last table entry)', () => {
+    const greg = toGregorian(1500, 12, 29);
+    assert(greg instanceof Date);
+    const hijri = toHijri(greg);
+    assert.deepEqual(hijri, { hy: 1500, hm: 12, hd: 29 });
+  });
+});
+
 describe('FCNA isValidHijriDate', () => {
   it('1446/9/1 = true', () => assert.strictEqual(isValidHijriDate(1446, 9, 1, FCNA), true));
   it('month 0 = false', () => assert.strictEqual(isValidHijriDate(1446, 0, 1, FCNA), false));
@@ -329,7 +359,7 @@ describe('UAQ default regression', () => {
     assert.strictEqual(d.toISOString().slice(0, 10), '2025-03-01');
   });
   it('toHijri still works without options', () => {
-    const h = toHijri(new Date(2023, 2, 23, 12));
+    const h = toHijri(new Date(Date.UTC(2023, 2, 23)));
     assert.deepEqual(h, { hy: 1444, hm: 9, hd: 1 });
   });
   it('isValidHijriDate still works without options', () => {

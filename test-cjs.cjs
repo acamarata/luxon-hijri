@@ -43,11 +43,11 @@ describe('CJS core conversions', () => {
     assert.strictEqual(d.toISOString().slice(0, 10), '2023-03-23');
   });
   it('toHijri(2022-07-30) = 1 Muharram 1444', () => {
-    const h = toHijri(new Date(2022, 6, 30, 12));
+    const h = toHijri(new Date(Date.UTC(2022, 6, 30)));
     assert.deepEqual(h, { hy: 1444, hm: 1, hd: 1 });
   });
   it('toHijri(2023-03-23) = 1 Ramadan 1444', () => {
-    const h = toHijri(new Date(2023, 2, 23, 12));
+    const h = toHijri(new Date(Date.UTC(2023, 2, 23)));
     assert.deepEqual(h, { hy: 1444, hm: 9, hd: 1 });
   });
 });
@@ -106,7 +106,7 @@ describe('CJS FCNA calendar', () => {
     assert.strictEqual(d.toISOString().slice(0, 10), '2025-03-01');
   });
   it('2025-03-01 = 1 Ramadan 1446', () => {
-    const h = toHijri(new Date(2025, 2, 1, 12), FCNA);
+    const h = toHijri(new Date(Date.UTC(2025, 2, 1)), FCNA);
     assert.deepEqual(h, { hy: 1446, hm: 9, hd: 1 });
   });
   it('isValidHijriDate(1446, 9, 1) = true', () => {
