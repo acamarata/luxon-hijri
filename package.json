@@ -70,6 +70,7 @@
   "devDependencies": {
     "@acamarata/eslint-config": "^0.1.0",
     "@acamarata/prettier-config": "^0.1.0",
+    "@acamarata/telemetry": "^0.1.0",
     "@acamarata/tsconfig": "^0.1.0",
     "@eslint/js": "^10.0.1",
     "@types/luxon": "^3.4.2",

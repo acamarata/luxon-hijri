@@ -14,6 +14,9 @@ importers:
       '@acamarata/prettier-config':
         specifier: ^0.1.0
         version: 0.1.0(prettier@3.8.1)
+      '@acamarata/telemetry':
+        specifier: ^0.1.0
+        version: 0.1.0
       '@acamarata/tsconfig':
         specifier: ^0.1.0
         version: 0.1.0
@@ -92,6 +95,10 @@ packages:
     engines: {node: '>=20'}
     peerDependencies:
       prettier: '>=3.0.0'
+
+  '@acamarata/telemetry@0.1.0':
+    resolution: {integrity: sha512-iP09ZD0bHencHLbv6kQZDgwN9crLCWGKxmiMrfJjhBCoWTgv4koSgg0Li/LFKwCCFluua6orj9fVeQ8eqcJXSQ==}
+    engines: {node: '>=20'}
 
   '@acamarata/tsconfig@0.1.0':
     resolution: {integrity: sha512-bgzyBak43mE+0HhduZX3cvaPjKcggtGGZZMjr35qtYWolsIWgZ9nx7OOswbVYoU35qoUv6rZ0mTK6GbZ8QTYjw==}
@@ -1571,6 +1578,8 @@ snapshots:
   '@acamarata/prettier-config@0.1.0(prettier@3.8.1)':
     dependencies:
       prettier: 3.8.1
+
+  '@acamarata/telemetry@0.1.0': {}
 
   '@acamarata/tsconfig@0.1.0': {}
 
