@@ -8,6 +8,7 @@ updates:
     groups:
       all:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -16,3 +17,4 @@ updates:
     groups:
       all:
         patterns: ["*"]
+        update-types: ["minor", "patch"]
